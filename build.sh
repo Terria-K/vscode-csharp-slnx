@@ -7,6 +7,8 @@ git clone $vscodeExtUrl
 
 cd free-vscode-csharp
 
+git apply ../slnx.patch --ignore-whitespace --recount -3
+
 npm install
 
 npm run vscode:prepublish

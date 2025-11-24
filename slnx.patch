@@ -1,0 +1,48 @@
+diff --git a/src/lsptoolshost/workspace/workspaceCommands.ts b/src/lsptoolshost/workspace/workspaceCommands.ts
+index c2aeea5a..0ccf2afd 100644
+--- a/src/lsptoolshost/workspace/workspaceCommands.ts
++++ b/src/lsptoolshost/workspace/workspaceCommands.ts
+@@ -24,7 +24,7 @@ async function openSolution(languageServer: RoslynLanguageServer): Promise<vscod
+         return undefined;
+     }
+ 
+-    const solutionFiles = await vscode.workspace.findFiles('**/*.{sln,slnf}');
++    const solutionFiles = await vscode.workspace.findFiles('**/*.{sln,slnf,slnx}');
+     const launchTargets = solutionFiles.map(createLaunchTargetForSolution);
+     const launchTarget = await vscode.window.showQuickPick(launchTargets, {
+         matchOnDescription: true,
+diff --git a/src/omnisharp/launcher.ts b/src/omnisharp/launcher.ts
+index b6f1cd97..d2578454 100644
+--- a/src/omnisharp/launcher.ts
++++ b/src/omnisharp/launcher.ts
+@@ -40,7 +40,7 @@ export async function findLaunchTargets(): Promise<LaunchTarget[]> {
+     }
+ 
+     const projectFiles = await vscode.workspace.findFiles(
+-        /*include*/ '{**/*.sln,**/*.slnf,**/*.csproj,**/*.csx,**/*.cake}',
++        /*include*/ '{**/*.sln,**/*.slnf,**/*.slnx,**/*.csproj,**/*.csx,**/*.cake}',
+         /*exclude*/ `{${omnisharpOptions.projectFilesExcludePattern}}`
+     );
+ 
+@@ -224,7 +224,7 @@ function isCSharpProject(resource: vscode.Uri): boolean {
+ }
+ 
+ function isSolution(resource: vscode.Uri): boolean {
+-    return /\.slnf?$/i.test(resource.fsPath);
++    return /\.sln(f|x)?$/i.test(resource.fsPath);
+ }
+ 
+ function isCsx(resource: vscode.Uri): boolean {
+diff --git a/src/omnisharp/server.ts b/src/omnisharp/server.ts
+index 49a2cc87..4db05800 100644
+--- a/src/omnisharp/server.ts
++++ b/src/omnisharp/server.ts
+@@ -682,7 +682,7 @@ export class OmniSharpServer {
+             await new Promise<void>((resolve) => {
+                 // 1st watch for files
+                 const watcher = this.vscode.workspace.createFileSystemWatcher(
+-                    '{**/*.sln,**/*.slnf,**/*.csproj,**/*.csx,**/*.cake}',
++                    '{**/*.sln,**/*.slnf,**/*.slnx,**/*.csproj,**/*.csx,**/*.cake}',
+                     /*ignoreCreateEvents*/ false,
+                     /*ignoreChangeEvents*/ true,
+                     /*ignoreDeleteEvents*/ true
