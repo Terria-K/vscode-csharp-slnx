@@ -2,7 +2,7 @@
 
 This is a "fork" of [free-vscode-csharp](https://github.com/muhammadsammy/free-vscode-csharp) by muhammadsammy which
 provides a slnx support which is the newer and better format for sln 
-((more information right here)[https://devblogs.microsoft.com/dotnet/introducing-slnx-support-dotnet-cli/]) since
+([more information right here](https://devblogs.microsoft.com/dotnet/introducing-slnx-support-dotnet-cli/)) since
 the free extension does not provide the support for it, even the MS one. 
 
 This just apply necessary patches to support slnx and published it as an artifacts from Github Actions. This also
